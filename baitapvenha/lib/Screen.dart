@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'model/task_model.dart';
+import 'model/color_model.dart';
 
 class Screen extends StatelessWidget {
   final List<Task> tasks = [
     Task(title: "Mobile App Research", date: "4 Oct", completed: true),
     Task(title: "Prepare Wireframe for Main Flow", date: "4 Oct", completed: true),
     Task(title: "Prepare Screens", date: "4 Oct", completed: false),
-  ];
-
-  final List<Color> colors = [
-    const Color(0xFFFFDCC8), // Peach
-    const Color(0xFFC8E6FF), // Light Blue
-    const Color(0xFFDCC8E6), // Light Purple
   ];
 
   @override
@@ -24,7 +19,6 @@ class Screen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Header Daily Task
               Container(
                 height: 139,
                 width: double.infinity,
@@ -53,6 +47,7 @@ class Screen extends StatelessWidget {
                           fontSize: 19,
                         ),
                       ),
+                      const SizedBox(height: 5),
                       const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -72,7 +67,7 @@ class Screen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 5),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: LinearProgressIndicator(
@@ -87,8 +82,6 @@ class Screen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-
-              // Title "Today's Task" and "See All"
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -109,15 +102,12 @@ class Screen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
-
-              // Task List
               Expanded(
                 child: ListView.builder(
                   itemCount: tasks.length,
                   itemBuilder: (context, index) {
                     final task = tasks[index];
-                    final color = colors[index % colors.length];
-
+                    final color = colorList[index % colorList.length].color;
                     return Container(
                       margin: const EdgeInsets.symmetric(vertical: 8),
                       height: 90,
@@ -137,8 +127,6 @@ class Screen extends StatelessWidget {
                               ),
                             ),
                           ),
-
-                          // Task details
                           Expanded(
                             child: Container(
                               padding: const EdgeInsets.symmetric(
