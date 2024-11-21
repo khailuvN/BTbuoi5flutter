@@ -1,22 +1,11 @@
 import 'package:flutter/material.dart';
+import 'model/task_model.dart';
 
 class Screen extends StatelessWidget {
-  final List<Map<String, dynamic>> tasks = [
-    {
-      "title": "Mobile App Research",
-      "date": "4 Oct",
-      "completed": true,
-    },
-    {
-      "title": "Prepare Wireframe for Main Flow",
-      "date": "4 Oct",
-      "completed": true,
-    },
-    {
-      "title": "Prepare Screens",
-      "date": "4 Oct",
-      "completed": false,
-    },
+  final List<Task> tasks = [
+    Task(title: "Mobile App Research", date: "4 Oct", completed: true),
+    Task(title: "Prepare Wireframe for Main Flow", date: "4 Oct", completed: true),
+    Task(title: "Prepare Screens", date: "4 Oct", completed: false),
   ];
 
   final List<Color> colors = [
@@ -57,9 +46,9 @@ class Screen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 5),
-                      const Text(
-                        '2/3 Task Completed',
-                        style: TextStyle(
+                      Text(
+                        '${tasks.where((task) => task.completed).length}/${tasks.length} Task Completed',
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 19,
                         ),
@@ -86,10 +75,10 @@ class Screen extends StatelessWidget {
                       const SizedBox(height: 10),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child: const LinearProgressIndicator(
-                          value: 0.66,
-                          backgroundColor: Color(0xFF432464),
-                          color: Color(0xFFB366FF),
+                        child: LinearProgressIndicator(
+                          value: tasks.where((task) => task.completed).length / tasks.length,
+                          backgroundColor: const Color(0xFF432464),
+                          color: const Color(0xFFB366FF),
                           minHeight: 20.0,
                         ),
                       ),
@@ -171,7 +160,7 @@ class Screen extends StatelessWidget {
                                     MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        task['title'],
+                                        task.title,
                                         style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 19,
@@ -187,7 +176,7 @@ class Screen extends StatelessWidget {
                                           ),
                                           const SizedBox(width: 5),
                                           Text(
-                                            task['date'],
+                                            task.date,
                                             style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 16,
@@ -198,10 +187,10 @@ class Screen extends StatelessWidget {
                                     ],
                                   ),
                                   Icon(
-                                    task['completed']
+                                    task.completed
                                         ? Icons.check_circle
                                         : Icons.radio_button_unchecked,
-                                    color: task['completed']
+                                    color: task.completed
                                         ? const Color(0xFFB366FF)
                                         : Colors.grey,
                                     size: 26,
